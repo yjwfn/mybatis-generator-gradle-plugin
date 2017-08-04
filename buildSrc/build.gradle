@@ -1,0 +1,33 @@
+apply plugin:'groovy'
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group "cn.yjwfn"
+version "0.0.1"
+
+
+
+uploadArchives{
+    archivesBaseName =  "mybatis-generator"
+
+    //本地仓库的一种
+    repositories{
+        mavenLocal()
+    }
+}
+
+
+
+repositories{
+    mavenCentral()
+}
+
+dependencies{
+    compile gradleApi()
+    compile localGroovy()
+
+    compile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
+    compile group: 'com.google.guava', name: 'guava', version: '22.0'
+    compile group: 'org.mybatis.generator', name: 'mybatis-generator-core', version: '1.3.5'
+
+}

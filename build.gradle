@@ -1,0 +1,11 @@
+buildscript {
+    repositories{
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+//    dependencies{
+//        classpath "cn.yjwfn:mybatis-generator:0.0.1"
+//    }
+}

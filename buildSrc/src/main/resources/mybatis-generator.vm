@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!--<properties resource="jdbc.properties"  />-->
+
+    #foreach($classPathEntry in ${classPathEntries})
+        <classPathEntry location="${classPathEntry.location}" />
+    #end
+
+    #foreach($context in ${contexts})
+        <context id="${context.id}" targetRuntime="${context.targetRuntime}">
+
+            #foreach($plugin in ${context.plugins})
+                <plugin type="${plugin.type}"/>
+            #end
+
+
+            <commentGenerator >
+                #foreach($property in ${context.commentGenerator.properties})
+                    <property name="${property.name}" value="${property.value}"/>
+                #end
+            </commentGenerator>
+
+            <jdbcConnection driverClass="${context.jdbcConnection.driverClass}"
+                            connectionURL="${context.jdbcConnection.connectionURL}"
+                            userId="${context.jdbcConnection.userId}"
+                            password="${context.jdbcConnection.password}">
+            </jdbcConnection>
+
+            <javaTypeResolver >
+                <property name="forceBigDecimals" value="false" />
+            </javaTypeResolver>
+
+            <javaModelGenerator targetPackage="${context.javaModelGenerator.targetPackage}" targetProject="${context.javaModelGenerator.targetProject}">
+                #foreach($property in ${context.javaModelGenerator.properties})
+                    <property name="${property.name}" value="${property.value}"/>
+                #end
+            </javaModelGenerator>
+
+            <sqlMapGenerator targetPackage="${context.sqlMapGenerator.targetPackage}"  targetProject="${context.sqlMapGenerator.targetProject}">
+                #foreach($property in ${context.sqlMapGenerator.properties})
+                    <property name="${property.name}" value="${property.value}"/>
+                #end
+            </sqlMapGenerator>
+
+            <javaClientGenerator type="${context.javaClientGenerator.type}" targetPackage="${context.javaClientGenerator.targetPackage}"  targetProject="${context.javaClientGenerator.targetProject}">
+                #foreach($property in ${context.javaClientGenerator.properties})
+                    <property name="${property.name}" value="${property.value}"/>
+                #end
+            </javaClientGenerator>
+
+
+            #foreach($table in ${context.tables})
+                <table tableName="${table.tableName}"
+                       domainObjectName="$!{table.domainObjectName}">
+
+
+                    #if(${table.generateKey})
+                        <generatedKey column="${table.generateKey.column}" sqlStatement="${table.generateKey.sqlStatement}" identity="${table.generateKey.identity}" />
+                    #end
+
+                    #foreach($ignoreColumn in ${table.ignoreColumns})
+                        <ignoreColumn column="${ignoreColumn.column}" />
+                    #end
+
+                    #foreach($columnOverride in ${table.columnOverrides})
+                        <columnOverride column="${columnOverride.column}" jdbcType="${columnOverride.jdbcType}" />
+                    #end
+
+                </table>
+            #end
+
+        </context>
+    #end
+</generatorConfiguration>
